@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LogSystem - Gestão & Rastreamento Logístico</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonte Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Estilização de scrollbar e efeitos customizados */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    
+    .pulse-ring {
+      animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6); }
+      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    }
+  </style>
+</head>
+<body class="h-full text-slate-900 font-sans antialiased bg-slate-50 flex flex-col selection:bg-blue-600 selection:text-white">
+
+  <!-- ========================================== -->
+  <!-- 1. TELA DE AUTENTICAÇÃO E LOGIN (/auth)    -->
+  <!-- ========================================== -->
+  <div id="authScreen" class="fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+      
+      <!-- Cabeçalho Auth -->
+      <div class="bg-slate-900 p-6 text-white text-center relative overflow-hidden">
+        <div class="absolute -right-8 -top-8 w-32 h-32 bg-blue-600/20 rounded-full blur-2xl"></div>
+        <div class="flex items-center justify-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-600/30">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 100-4 2 2 0 000 4zm14 0a2 2 0 100-4 2 2 0 000 4z" />
+            </svg>
+          </div>
+          <span class="text-2xl font-extrabold tracking-tight">LogSystem</span>
+        </div>
+        <p class="text-slate-400 text-xs">Sistema de Gestão & Rastreamento de Entregas</p>
+      </div>
+
+      <!-- Abas Login / Cadastro -->
+      <div class="flex border-b border-slate-200 bg-slate-50">
+        <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="flex-1 py-3 text-xs font-bold text-blue-600 border-b-2 border-blue-600 transition">
+          Entrar no Sistema
+        </button>
+        <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="flex-1 py-3 text-xs font-bold text-slate-500 hover:text-slate-800 transition">
+          Cadastrar Usuário
+        </button>
+      </div>
+
+      <!-- Formulários -->
+      <div class="p-6 space-y-5">
+        
+        <!-- Formulário de Login -->
+        <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">E-mail corporativo</label>
+            <input type="email" id="loginEmail" required value="GRS@gmail.com" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none transition">
+          </div>
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="block text-xs font-semibold text-slate-700">Senha</label>
+              <span class="text-[11px] text-blue-600 font-medium">Pré-definida: GRS123</span>
+            </div>
+            <input type="password" id="loginPassword" required value="GRS123" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none transition">
+          </div>
+
+          <div id="loginErrorMsg" class="hidden text-xs text-rose-600 bg-rose-50 p-2.5 rounded-lg border border-rose-200 font-medium">
+            E-mail ou senha incorretos. Verifique suas credenciais.
+          </div>
+
+          <button type="submit" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition shadow-md shadow-blue-600/20 active:scale-[0.98]">
+            Acessar Plataforma ADM
+          </button>
+        </form>
+
+        <!-- Formulário de Cadastro -->
+        <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Nome Completo</label>
+            <input type="text" id="regName" required placeholder="Ex: Roberto Silva" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none transition">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">E-mail corporativo</label>
+            <input type="email" id="regEmail" required placeholder="usuario@empresa.com" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none transition">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Cargo / Função</label>
+            <select id="regRole" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none transition">
+              <option value="Operador">Operador de Logística</option>
+              <option value="Motorista">Motorista</option>
+              <option value="Administrador">Administrador</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Senha de Acesso</label>
+            <input type="password" id="regPass" required placeholder="Digite sua senha" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none transition">
+          </div>
+
+          <button type="submit" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition shadow-md shadow-blue-600/20">
+            Cadastrar Conta no Banco Local
+          </button>
+        </form>
+
+        <!-- Atalhos Rápido para Demonstração -->
+        <div class="pt-4 border-t border-slate-200">
+          <p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider text-center mb-2">
+            Entrada Rápida por Perfil:
+          </p>
+          <div class="grid grid-cols-3 gap-2">
+            <button onclick="loginPreset('GRS@gmail.com', 'GRS123')" class="p-2 bg-slate-100 hover:bg-blue-50 hover:border-blue-300 border border-slate-200 rounded-lg text-left transition text-[11px]">
+              <span class="font-bold block text-slate-800">🔑 Admin GRS</span>
+              <span class="text-[10px] text-slate-500">Acesso Total</span>
+            </button>
+            <button onclick="loginPreset('operacao@logsystem.com', '123456')" class="p-2 bg-slate-100 hover:bg-blue-50 hover:border-blue-300 border border-slate-200 rounded-lg text-left transition text-[11px]">
+              <span class="font-bold block text-slate-800">📦 Operador</span>
+              <span class="text-[10px] text-slate-500">Gestão Pedidos</span>
+            </button>
+            <button onclick="loginPreset('carlos.driver@logsystem.com', '123456')" class="p-2 bg-slate-100 hover:bg-blue-50 hover:border-blue-300 border border-slate-200 rounded-lg text-left transition text-[11px]">
+              <span class="font-bold block text-slate-800">🚚 Motorista</span>
+              <span class="text-[10px] text-slate-500">App de Rota</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. ESTRUTURA PRINCIPAL DO SISTEMA         -->
+  <!-- ========================================== -->
+  <div id="appShell" class="min-h-screen flex flex-col md:flex-row bg-slate-50">
+    
+    <!-- BARRA LATERAL (SIDEBAR) -->
+    <aside class="w-full md:w-64 bg-slate-900 text-slate-300 flex flex-col border-r border-slate-800 flex-shrink-0">
+      
+      <!-- Marca / Logo -->
+      <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-600/30">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 100-4 2 2 0 000 4zm14 0a2 2 0 100-4 2 2 0 000 4z" />
+            </svg>
+          </div>
+          <div>
+            <h1 class="font-extrabold text-white text-base tracking-tight leading-none">LogSystem</h1>
+            <span class="text-[10px] text-blue-400 font-semibold tracking-wider uppercase">Local DB Persistent</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menu de Navegação -->
+      <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto">
+        
+        <button onclick="navigateTo('painel')" id="nav-painel" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-semibold text-white bg-blue-600 shadow-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+          <span>Painel Geral</span>
+        </button>
+
+        <button onclick="navigateTo('pedidos')" id="nav-pedidos" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition">
+          <div class="flex items-center gap-3">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            <span>Central de Pedidos</span>
+          </div>
+          <span id="navOrderBadge" class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/20 text-blue-400">0</span>
+        </button>
+
+        <button onclick="navigateTo('mapa')" id="nav-mapa" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition">
+          <div class="flex items-center gap-3">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+            <span>Mapa ao Vivo</span>
+          </div>
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        </button>
+
+        <button onclick="navigateTo('motorista')" id="nav-motorista" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          <span>Visão do Motorista</span>
+        </button>
+
+        <button onclick="navigateTo('usuarios')" id="nav-usuarios" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <span>Usuários do Banco</span>
+        </button>
+
+        <button onclick="navigateTo('logs')" id="nav-logs" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Logs & Auditoria</span>
+        </button>
+
+      </nav>
+
+      <!-- Rodapé Usuário Logado -->
+      <div class="p-4 border-t border-slate-800 bg-slate-950/60 flex items-center justify-between">
+        <div class="flex items-center gap-2.5 overflow-hidden">
+          <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-xs">
+            <span id="userInitials">GR</span>
+          </div>
+          <div class="truncate">
+            <p id="sidebarUserName" class="text-xs font-bold text-white truncate">Administrador GRS</p>
+            <p id="sidebarUserRole" class="text-[10px] text-slate-400 font-mono truncate">Administrador</p>
+          </div>
+        </div>
+        <button onclick="handleLogout()" title="Sair da Conta" class="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL DA APLICAÇÃO -->
+    <div class="flex-1 flex flex-col min-w-0">
+      
+      <!-- Cabeçalho Topo -->
+      <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-3">
+          <h2 id="pageTitle" class="text-lg font-extrabold text-slate-900 tracking-tight">Painel Geral</h2>
+          <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            Banco Local Ativo (localStorage)
+          </span>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <!-- Relógio Sincronizado -->
+          <div class="hidden sm:flex items-center gap-2 text-xs text-slate-600 font-mono bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+            <span id="clockDisplay">12:00:00</span>
+          </div>
+
+          <!-- Botão Novo Pedido -->
+          <button onclick="openNewOrderModal()" class="flex items-center gap-2 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition shadow-sm active:scale-95">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+            <span>+ Novo Pedido</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- ÁREA DE VISUALIZAÇÃO DAS ABAS -->
+      <main class="flex-1 p-6 overflow-y-auto space-y-6">
+
+        <!-- ========================================== -->
+        <!-- TAB 1: PAINEL GERAL (DASHBOARD)            -->
+        <!-- ========================================== -->
+        <section id="view-painel" class="space-y-6">
+          
+          <!-- Cards de Métricas Principais -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            
+            <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total de Pedidos</p>
+                  <h3 id="statTotalOrders" class="text-2xl font-extrabold text-slate-900 mt-1">0</h3>
+                </div>
+                <div class="p-2.5 rounded-xl bg-blue-50 text-blue-600">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                </div>
+              </div>
+              <p class="text-xs text-emerald-600 font-semibold mt-3 flex items-center gap-1">
+                <span>↑ Persistido em BD Local</span>
+              </p>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Em Trânsito</p>
+                  <h3 id="statInTransit" class="text-2xl font-extrabold text-slate-900 mt-1">0</h3>
+                </div>
+                <div class="p-2.5 rounded-xl bg-blue-50 text-blue-600">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+              </div>
+              <p class="text-xs text-blue-600 font-semibold mt-3">
+                Cargas em movimento GPS
+              </p>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Entregues</p>
+                  <h3 id="statDelivered" class="text-2xl font-extrabold text-slate-900 mt-1">0</h3>
+                </div>
+                <div class="p-2.5 rounded-xl bg-emeral

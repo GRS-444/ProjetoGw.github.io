@@ -318,4 +318,1082 @@
                   <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Entregues</p>
                   <h3 id="statDelivered" class="text-2xl font-extrabold text-slate-900 mt-1">0</h3>
                 </div>
-                <div class="p-2.5 rounded-xl bg-emeral
+                
+<div class="p-2.5 rounded-xl bg-emerald-50 text-emerald-600">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                </div>
+              </div>
+              <p class="text-xs text-emerald-600 font-semibold mt-3">
+                Concluídas com sucesso
+              </p>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Pendentes / Atrasos</p>
+                  <h3 id="statPending" class="text-2xl font-extrabold text-slate-900 mt-1">0</h3>
+                </div>
+                <div class="p-2.5 rounded-xl bg-amber-50 text-amber-600">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+              </div>
+              <p class="text-xs text-slate-500 mt-3">
+                Aguardando despacho ou rota
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Distribuição das Operações e Frota -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Barra de Progresso por Categoria -->
+            <div class="lg:col-span-2 bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+              <div class="flex justify-between items-center mb-5">
+                <div>
+                  <h3 class="font-bold text-slate-900 text-sm">Distribuição do Volume de Entregas</h3>
+                  <p class="text-xs text-slate-500">Percentual de cargas por status de progresso</p>
+                </div>
+                <span class="text-xs text-slate-400 font-mono">Dados do LocalStorage</span>
+              </div>
+
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span class="text-slate-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Entregues com Sucesso</span>
+                    <span id="labelPercentDelivered" class="text-slate-900">0% (0)</span>
+                  </div>
+                  <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                    <div id="barDelivered" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span class="text-slate-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span> Em Trânsito / Na Rota</span>
+                    <span id="labelPercentInTransit" class="text-slate-900">0% (0)</span>
+                  </div>
+                  <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                    <div id="barInTransit" class="h-full bg-blue-600 rounded-full transition-all duration-500" style="width: 0%;"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span class="text-slate-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Pendentes de Despacho</span>
+                    <span id="labelPercentPending" class="text-slate-900">0% (0)</span>
+                  </div>
+                  <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                    <div id="barPending" class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
+                  </div>
+                </div><div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span class="text-slate-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Ocorrências / Atrasados</span>
+                    <span id="labelPercentDelayed" class="text-slate-900">0% (0)</span>
+                  </div>
+                  <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                    <div id="barDelayed" class="h-full bg-rose-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center text-xs">
+                <span class="text-slate-500">Gerenciar pedidos cadastrados?</span>
+                <button onclick="navigateTo('pedidos')" class="text-blue-600 font-bold hover:underline flex items-center gap-1">
+                  Abrir Central de Pedidos →
+                </button>
+              </div>
+            </div>
+
+            <!-- Resumo da Frota -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-slate-900 text-sm mb-1">Motoristas & Frota Ativa</h3>
+                <p class="text-xs text-slate-500 mb-4">Status dos veículos registrados</p>
+
+                <div class="space-y-3" id="dashDriversList">
+                  <!-- Preenchido via JS -->
+                </div>
+              </div>
+
+              <button onclick="navigateTo('mapa')" class="w-full mt-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition text-center">
+                Visualizar Telemetria no Mapa
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Tabela Recente do Dashboard -->
+          <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="font-bold text-slate-900 text-sm">Últimas Atualizações no Sistema</h3>
+              <button onclick="navigateTo('pedidos')" class="text-xs text-blue-600 font-bold hover:underline">Ver Todos</button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 text-slate-500 uppercase font-bold text-[10px] tracking-wider border-b border-slate-200">
+                  <tr>
+                    <th class="p-3">ID Pedido</th>
+                    <th class="p-3">Cliente</th>
+                    <th class="p-3">Motorista</th>
+                    <th class="p-3">Previsão (ETA)</th>
+                    <th class="p-3">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="dashOrdersTbody" class="divide-y divide-slate-100 text-slate-700">
+                  <!-- Preenchido via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+        <!-- ========================================== -->
+        <!-- TAB 2: CENTRAL DE PEDIDOS                  -->
+        <!-- ========================================== -->
+        <section id="view-pedidos" class="space-y-6 hidden">
+          
+          <!-- Barra de Busca e Filtros -->
+          <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <!-- Campo de Busca -->
+            <div class="relative w-full md:w-80">
+              <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <input type="text" id="orderSearchInput" oninput="renderOrdersTable()" placeholder="Buscar por ID, cliente ou motorista..." class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none">
+            </div>
+
+            <!-- Botões de Filtro -->
+            <div class="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto">
+              <button onclick="setFilterStatus('todos')" id="filter-todos" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white transition">Todos</button>
+              <button onclick="setFilterStatus('em_transito')" id="filter-em_transito" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Em Trânsito</button>
+              <button onclick="setFilterStatus('pendente')" id="filter-pendente" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Pendentes</button>
+              <button onclick="setFilterStatus('entregue')" id="filter-entregue" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Entregues</button>
+              <button onclick="setFilterStatus('atrasado')" id="filter-atrasado" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Atrasados</button>
+            </div>
+
+          </div>
+
+          <!-- Tabela de Pedidos -->
+          <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 text-slate-500 uppercase font-bold text-[10px] tracking-wider border-b border-slate-200">
+                  <tr>
+                    <th class="p-4">Cód. Rastreio / ID</th>
+                    <th class="p-4">Cliente & Destino</th>
+                    <th class="p-4">Prioridade</th>
+                    <th class="p-4">Motorista Responsável</th>
+                    <th class="p-4">Previsão ETA</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4 text-right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="ordersFullTbody" class="divide-y divide-slate-100 text-slate-700">
+                  <!-- Renderizado via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 3: MAPA DE RASTREAMENTO AO VIVO       -->
+        <!-- ========================================== -->
+        <section id="view-mapa" class="space-y-6 hidden">
+          
+          <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+            
+            <!-- Controles do Mapa -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50 p-3 rounded-xl border border-slate-200">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                  Rastreamento em Tempo Real (Canvas 2D)
+                </h3>
+                <p class="text-xs text-slate-500">Rota simulada: CD São Paulo → Jundiaí → Campinas</p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <button id="toggleMapAnimBtn" onclick="toggleMapAnimation()" class="px-3 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-bold hover:bg-slate-800 transition">
+                  Pausar Simulação
+                </button>
+                <span class="text-xs font-mono bg-white px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600">
+                  GPS Active
+                </span>
+              </div>
+            </div>
+
+            <!-- Container do Canvas do Mapa -->
+            <div class="relative h-[480px] bg-slate-900 rounded-xl overflow-hidden border border-slate-800">
+              
+              <canvas id="liveMapCanvas" class="w-full h-full block cursor-crosshair"></canvas>
+
+              <!-- Painel Flutuante de Telemetria -->
+              <div class="absolute bottom-4 left-4 bg-slate-900/90 text-white border border-slate-700 rounded-xl p-4 backdrop-blur-md w-72 shadow-2xl space-y-2.5 text-xs">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                  <span class="font-bold text-blue-400 uppercase tracking-wider text-[10px]">Telemetria do Veículo</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-400 font-bold">ONLINE</span>
+                </div>
+
+                <div class="space-y-1.5">
+                  <div class="flex justify-between text-slate-400">
+                    <span>Motorista Ativo:</span>
+                    <strong className="text-white" id="mapDriverName">Carlos Eduardo</strong>
+                  </div>
+                  <div class="flex justify-between text-slate-400">
+                    <span>Veículo:</span>
+                    <strong class="text-white">Volvo FH 540 (GRS-2026)</strong>
+                  </div>
+                  <div class="flex justify-between text-slate-400">
+                    <span>Velocidade GPS:</span>
+                    <strong id="telemetrySpeed" class="text-blue-400 font-mono">74 km/h</strong>
+                  </div>
+                  <div class="flex justify-between text-slate-400">
+                    <span>Bateria do Sensor:</span>
+                    <strong class="text-emerald-400 font-mono">98% ⚡</strong>
+                  </div>
+                  <div class="flex justify-between text-slate-400">
+                    <span>Carga Atual:</span>
+                    <strong class="text-amber-400 font-mono">LOG-8842 (Urgente)</strong>
+                  </div>
+                </div>
+              </div>
+              <!-- Legenda do Mapa -->
+              <div class="absolute top-4 right-4 bg-slate-900/90 text-white border border-slate-700 rounded-xl p-3 backdrop-blur-md text-[11px] space-y-1.5">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                  <span>CD São Paulo (Origem)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                  <span>Ponto Jundiaí (Waypoint)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                  <span>Hub Campinas (Destino)</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 4: VISÃO DO MOTORISTA (MOBILE VIEW)    -->
+        <!-- ========================================== -->
+        <section id="view-motorista" class="space-y-6 hidden">
+          
+          <div class="max-w-md mx-auto">
+            <div class="text-center mb-3">
+              <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                📱 Simulador do Aplicativo do Motorista
+              </span>
+            </div>
+
+            <!-- Moldura do Smartphone -->
+            <div class="bg-slate-900 border-4 border-slate-800 rounded-[36px] p-4 shadow-2xl space-y-4">
+              
+              <div class="w-32 h-4 bg-slate-800 rounded-full mx-auto"></div>
+
+              <!-- Cartão do Motorista -->
+              <div class="bg-slate-800 rounded-2xl p-4 text-white flex items-center justify-between border border-slate-700">
+                <div>
+                  <p class="text-[10px] text-slate-400 uppercase font-bold">Motorista Logado</p>
+                  <h4 id="driverMobileName" class="text-sm font-bold">Carlos Eduardo</h4>
+                  <p class="text-[11px] text-blue-400 font-mono">Placa: GRS-2026</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold text-sm">
+                  CE
+                </div>
+              </div>
+
+              <!-- Pedido Ativo do Motorista -->
+              <div id="driverActiveOrderCard" class="bg-gradient-to-b from-blue-900/50 to-slate-800 rounded-2xl p-5 text-white border border-blue-500/30 space-y-4">
+                
+                <div class="flex justify-between items-center">
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500 text-white uppercase">Próxima Entrega</span>
+                  <span class="text-xs font-mono text-slate-300">LOG-8842</span>
+                </div>
+
+                <div>
+                  <h3 class="text-base font-extrabold text-white">TechCorp Brasil</h3>
+                  <p class="text-xs text-slate-300 mt-1">Av. Paulista, 1000 - Bela Vista, São Paulo - SP</p>
+                </div>
+
+                <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/60 text-xs space-y-1">
+                  <p class="text-slate-400">Itens a entregar:</p>
+                  <p class="font-semibold text-slate-200">3x Laptops, 2x Monitores LCD</p>
+                </div>
+
+                <!-- Botões de Ação do Motorista -->
+                <div class="space-y-2 pt-2">
+                  <button onclick="driverStartNavigation()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-xs shadow-md transition flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span>Iniciar Rota no GPS</span>
+                  </button>
+
+                  <button onclick="driverConfirmDelivery('LOG-8842')" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs shadow-md transition flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    <span>Confirmar Entrega Realizada</span>
+                  </button>
+                </div>
+
+              </div>
+
+              <div class="text-center">
+                <p class="text-[11px] text-slate-400">Status sincronizado automaticamente com o banco local de dados.</p>
+              </div>
+
+            </div>
+          </div>
+
+        </section>
+        <!-- ========================================== -->
+        <!-- TAB 5: GESTÃO DE USUÁRIOS E BANCO LOCAL    -->
+        <!-- ========================================== -->
+        <section id="view-usuarios" class="space-y-6 hidden">
+          <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+            <div class="flex justify-between items-center mb-5">
+              <div>
+                <h3 class="font-bold text-slate-900 text-sm">Usuários Cadastrados no Banco Local</h3>
+                <p class="text-xs text-slate-500">Persistidos no localStorage do navegador</p>
+              </div>
+              <button onclick="switchAuthTab('register'); document.getElementById('authScreen').classList.remove('hidden');" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition">
+                + Novo Usuário
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 text-slate-500 uppercase font-bold text-[10px] tracking-wider border-b border-slate-200">
+                  <tr>
+                    <th class="p-3">Nome</th>
+                    <th class="p-3">E-mail</th>
+                    <th class="p-3">Cargo</th>
+                    <th class="p-3">Status</th>
+                    <th class="p-3">Último Acesso</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTableTbody" class="divide-y divide-slate-100 text-slate-700">
+                  <!-- Preenchido via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 6: LOGS E AUDITORIA                    -->
+        <!-- ========================================== -->
+        <section id="view-logs" class="space-y-6 hidden">
+          <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-4">
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="font-bold text-slate-900 text-sm">Histórico de Eventos & Logs de Auditoria</h3>
+                <p class="text-xs text-slate-500">Registros gravados no banco local</p>
+              </div>
+              <button onclick="clearLogs()" class="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900 font-semibold border border-slate-300 rounded-lg">
+                Limpar Logs
+              </button>
+            </div>
+
+            <div id="logsContainer" class="space-y-2 font-mono text-xs max-h-[450px] overflow-y-auto pr-1">
+              <!-- Logs Preenchidos via JS -->
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: CADASTRAR NOVO PEDIDO               -->
+  <!-- ========================================== -->
+  <div id="newOrderModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+      <button onclick="closeNewOrderModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <h3 class="text-base font-extrabold text-slate-900 mb-1">Cadastrar Novo Pedido de Carga</h3>
+      <p class="text-xs text-slate-500 mb-5">Os dados serão armazenados no banco local</p>
+
+      <form onsubmit="handleCreateOrder(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Nome do Cliente / Empresa</label>
+          <input type="text" id="modalClient" required placeholder="Ex: Supermercados Alvorada" class="w-full px-3.5 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Endereço de Destino Completo</label>
+          <input type="text" id="modalDestination" required placeholder="Ex: Av. Faria Lima, 1500 - São Paulo, SP" class="w-full px-3.5 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Motorista Atribuído</label>
+            <select id="modalDriver" class="w-full px-3.5 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none">
+              <option value="Carlos Eduardo">Carlos Eduardo</option>
+              <option value="Mariana Silva">Mariana Silva</option>
+              <option value="Roberto Santos">Roberto Santos</option>
+              <option value="Lucas Ferreira">Lucas Ferreira</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Prioridade</label>
+            <select id="modalPriority" class="w-full px-3.5 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none">
+              <option value="Normal">Normal</option>
+              <option value="Média">Média</option>
+              <option value="Alta">Alta</option>
+              <option value="Urgente">Urgente</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Descrição dos Itens / Carga</label>
+          <textarea id="modalItems" rows="2" placeholder="Ex: 10x Caixas de Medicamentos" class="w-full px-3.5 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-600 focus:outline-none"></textarea>
+        </div>
+
+        <div class="pt-3 flex justify-end gap-2">
+          <button type="button" onclick="closeNewOrderModal()" class="px-4 py-2 rounded-lg bg-slate-100 text-slate-700 text-xs font-semibold hover:bg-slate-200 transition">
+            Cancelar
+          </button>
+          <button type="submit" class="px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition shadow-md shadow-blue-600/20">
+            Salvar no Banco Local
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: DETALHES DO PEDIDO                  -->
+  <!-- ========================================== -->
+  <div id="orderDetailsModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <button onclick="closeOrderDetailsModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div class="flex items-center gap-2 mb-2">
+        <span id="detailOrderId" class="font-mono text-xs font-extrabold text-blue-600">LOG-8842</span>
+        <span id="detailStatusBadge"></span>
+      </div>
+
+      <h3 id="detailClient" class="text-lg font-extrabold text-slate-900 mb-4">TechCorp Brasil</h3>
+
+      <div class="space-y-3 text-xs bg-slate-50 p-4 rounded-xl border border-slate-200">
+        <div>
+          <span class="text-slate-400 block text-[10px] uppercase font-bold">Código de Rastreamento:</span>
+          <span id="detailTracking" class="font-mono font-bold text-slate-800">TRK-9921-SP</span>
+        </div>
+        <div>
+          <span class="text-slate-400 block text-[10px] uppercase font-bold">Endereço de Destino:</span>
+          <span id="detailDestination" class="font-semibold text-slate-800">Av. Paulista, 1000 - São Paulo, SP</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200">
+          <div>
+            <span class="text-slate-400 block text-[10px] uppercase font-bold">Motorista:</span>
+            <span id="detailDriver" class="font-semibold text-slate-800">Carlos Eduardo</span>
+          </div>
+          <div>
+            <span class="text-slate-400 block text-[10px] uppercase font-bold">Previsão (ETA):</span>
+            <span id="detailEta" class="font-semibold text-slate-800">14:35</span>
+          </div>
+        </div>
+        <div class="pt-2 border-t border-slate-200">
+          <span class="text-slate-400 block text-[10px] uppercase font-bold">Volume da Carga:</span>
+          <span id="detailItems" class="font-semibold text-slate-800">3x Laptops, 2x Monitores</span>
+        </div>
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center">
+        <span class="text-xs text-slate-500 font-medium">Avançar Status:</span>
+        <button id="detailAdvanceBtn" onclick="" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition">
+          Próximo Status →
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- LÓGICA DE JAVASCRIPT & BANCO LOCAL         -->
+  <!-- ========================================== -->
+  <script>
+    // --- ESTADO INICIAL E CHAVES DO LOCALSTORAGE ---
+    const DB_KEYS = {
+      USERS: 'logsystem_db_users',
+      ORDERS: 'logsystem_db_orders',
+      LOGS: 'logsystem_db_logs',
+      SESSION: 'logsystem_db_session'
+    };
+
+    // Dados iniciais pré-configurados
+    const INITIAL_USERS = [
+      { id: 'usr-1', name: 'Administrador GRS', email: 'GRS@gmail.com', pass: 'GRS123', role: 'Administrador', status: 'Ativo', lastAccess: 'Agora' },
+      { id: 'usr-2', name: 'Gestor Operacional', email: 'operacao@logsystem.com', pass: '123456', role: 'Operador', status: 'Ativo', lastAccess: 'Há 10 min' },
+      { id: 'usr-3', name: 'Carlos Eduardo', email: 'carlos.driver@logsystem.com', pass: '123456', role: 'Motorista', status: 'Em Campo', lastAccess: 'Há 2 min' },
+      { id: 'usr-4', name: 'Mariana Silva', email: 'mariana.driver@logsystem.com', pass: '123456', role: 'Motorista', status: 'Em Campo', lastAccess: 'Há 15 min' }
+    ];
+
+    const INITIAL_ORDERS = [
+      { id: 'LOG-8842', client: 'TechCorp Brasil', destination: 'Av. Paulista, 1000 - São Paulo, SP', driver: 'Carlos Eduardo', status: 'em_transito', eta: '14:35', priority: 'Alta', items: '3x Laptops, 2x Monitores', trackingCode: 'TRK-9921-SP' },
+      { id: 'LOG-8843', client: 'Supermercados Alvorada', destination: 'Rua das Flores, 450 - Campinas, SP', driver: 'Mariana Silva', status: 'entregue', eta: '11:20', priority: 'Média', items: '15x Caixas Térmicas', trackingCode: 'TRK-4412-CP' },
+      { id: 'LOG-8844', client: 'Farmácia Central', destination: 'R. XV de Novembro, 88 - Curitiba, PR', driver: 'Roberto Santos', status: 'pendente', eta: '16:50', priority: 'Urgente', items: '5x Insumos Médicos', trackingCode: 'TRK-7719-PR' },
+      { id: 'LOG-8845', client: 'Indústria Metalúrgica SA', destination: 'Av. Brasil, 2200 - Rio de Janeiro, RJ', driver: 'Lucas Ferreira', status: 'em_transito', eta: '15:10', priority: 'Normal', items: '2x Peças Industriais', trackingCode: 'TRK-3301-RJ' },
+      { id: 'LOG-8846', client: 'Livraria Horizonte', destination: 'Rua Bahia, 310 - Belo Horizonte, MG', driver: 'Mariana Silva', status: 'atrasado', eta: '10:00', priority: 'Média', items: '10x Lotes de Livros', trackingCode: 'TRK-1198-MG' }
+    ];
+
+    const INITIAL_LOGS = [
+      { time: new Date().toLocaleTimeString(), category: 'BANCO', text: 'Banco de dados local (localStorage) inicializado com sucesso.' },
+      { time: '12:00:00', category: 'SISTEMA', text: 'Conta GRS@gmail.com configurada como Administrador Principal.' }
+    ];
+
+    let currentUser = null;
+    let filterStatus = 'todos';
+
+    // --- FUNÇÕES DE INICIALIZAÇÃO DO BANCO LOCAL ---
+    function initDatabase() {
+      if (!localStorage.getItem(DB_KEYS.USERS)) {
+        localStorage.setItem(DB_KEYS.USERS, JSON.stringify(INITIAL_USERS));
+      } else {
+        // Garantir que a conta de GRS@gmail.com / GRS123 sempre existe no BD
+        const users = JSON.parse(localStorage.getItem(DB_KEYS.USERS));
+        if (!users.some(u => u.email.toLowerCase() === 'grs@gmail.com')) {
+          users.unshift(INITIAL_USERS[0]);
+          localStorage.setItem(DB_KEYS.USERS, JSON.stringify(users));
+        }
+      }
+
+      if (!localStorage.getItem(DB_KEYS.ORDERS)) {
+        localStorage.setItem(DB_KEYS.ORDERS, JSON.stringify(INITIAL_ORDERS));
+      }
+
+      if (!localStorage.getItem(DB_KEYS.LOGS)) {
+        localStorage.setItem(DB_KEYS.LOGS, JSON.stringify(INITIAL_LOGS));
+      }
+
+      // Checar se existe sessão prévia
+      const activeSession = localStorage.getItem(DB_KEYS.SESSION);
+      if (activeSession) {
+        currentUser = JSON.parse(activeSession);
+        finishLogin();
+      }
+    }
+
+    function getDBUsers() { return JSON.parse(localStorage.getItem(DB_KEYS.USERS)) || []; }
+    function getDBOrders() { return JSON.parse(localStorage.getItem(DB_KEYS.ORDERS)) || []; }
+    function getDBLogs() { return JSON.parse(localStorage.getItem(DB_KEYS.LOGS)) || []; }
+
+    function saveDBUsers(data) { localStorage.setItem(DB_KEYS.USERS, JSON.stringify(data)); }
+    function saveDBOrders(data) { localStorage.setItem(DB_KEYS.ORDERS, JSON.stringify(data)); }
+    function saveDBLogs(data) { localStorage.setItem(DB_KEYS.LOGS, JSON.stringify(data)); }
+
+    // --- AUTENTICAÇÃO ---
+    function switchAuthTab(tab) {
+      const loginBtn = document.getElementById('tabLoginBtn');
+      const regBtn = document.getElementById('tabRegisterBtn');
+      const loginForm = document.getElementById('loginForm');
+      const regForm = document.getElementById('registerForm');
+
+      if (tab === 'login') {
+        loginBtn.className = 'flex-1 py-3 text-xs font-bold text-blue-600 border-b-2 border-blue-600 transition';
+        regBtn.className = 'flex-1 py-3 text-xs font-bold text-slate-500 hover:text-slate-800 transition';
+        loginForm.classList.remove('hidden');
+        regForm.classList.add('hidden');
+      } else {
+        regBtn.className = 'flex-1 py-3 text-xs font-bold text-blue-600 border-b-2 border-blue-600 transition';
+        loginBtn.className = 'flex-1 py-3 text-xs font-bold text-slate-500 hover:text-slate-800 transition';
+        regForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+      }
+    }
+    function handleLogin(e) {
+      if (e) e.preventDefault();
+      const emailInput = document.getElementById('loginEmail').value.trim();
+      const passInput = document.getElementById('loginPassword').value.trim();
+      const errBox = document.getElementById('loginErrorMsg');
+
+      const users = getDBUsers();
+      const found = users.find(u => u.email.toLowerCase() === emailInput.toLowerCase() && u.pass === passInput);
+
+      if (found) {
+        errBox.classList.add('hidden');
+        currentUser = found;
+        localStorage.setItem(DB_KEYS.SESSION, JSON.stringify(found));
+        finishLogin();
+      } else {
+        errBox.classList.remove('hidden');
+      }
+    }
+
+    function loginPreset(email, pass) {
+      document.getElementById('loginEmail').value = email;
+      document.getElementById('loginPassword').value = pass;
+      handleLogin();
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const role = document.getElementById('regRole').value;
+      const pass = document.getElementById('regPass').value.trim();
+
+      const users = getDBUsers();
+      if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+        alert('Este e-mail já está cadastrado no sistema!');
+        return;
+      }
+
+      const newUser = {
+        id: 'usr-' + Date.now(),
+        name,
+        email,
+        pass,
+        role,
+        status: 'Ativo',
+        lastAccess: 'Agora'
+      };
+
+      users.unshift(newUser);
+      saveDBUsers(users);
+      addAuditLog('CADASTRO', `Novo usuário registrado: ${name} (${role})`);
+      
+      currentUser = newUser;
+      localStorage.setItem(DB_KEYS.SESSION, JSON.stringify(newUser));
+      finishLogin();
+    }
+
+    function finishLogin() {
+      document.getElementById('authScreen').classList.add('hidden');
+      
+      document.getElementById('sidebarUserName').innerText = currentUser.name;
+      document.getElementById('sidebarUserRole').innerText = currentUser.role;
+      document.getElementById('userInitials').innerText = currentUser.name.substring(0, 2).toUpperCase();
+
+      addAuditLog('AUTH', `Sessão iniciada por ${currentUser.name} (${currentUser.role}).`);
+      
+      renderAllViews();
+    }
+
+    function handleLogout() {
+      currentUser = null;
+      localStorage.removeItem(DB_KEYS.SESSION);
+      document.getElementById('authScreen').classList.remove('hidden');
+    }
+
+    // --- NAVEGAÇÃO ENTRE ABAS ---
+    function navigateTo(tabId) {
+      const views = ['painel', 'pedidos', 'mapa', 'motorista', 'usuarios', 'logs'];
+      views.forEach(v => {
+        const viewEl = document.getElementById(`view-${v}`);
+        const navEl = document.getElementById(`nav-${v}`);
+        
+        if (v === tabId) {
+          viewEl.classList.remove('hidden');
+          navEl.className = 'w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold text-white bg-blue-600 shadow-sm transition';
+        } else {
+          viewEl.classList.add('hidden');
+          navEl.className = 'w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition';
+        }
+      });
+
+      const titles = {
+        painel: 'Painel Geral & Métricas',
+        pedidos: 'Central de Pedidos e Despacho',
+        mapa: 'Mapa de Rastreamento ao Vivo',
+        motorista: 'Simulador Visão do Motorista',
+        usuarios: 'Usuários Cadastrados no Banco Local',
+        logs: 'Histórico de Logs & Auditoria'
+      };
+      document.getElementById('pageTitle').innerText = titles[tabId];
+
+      if (tabId === 'mapa') {
+        initLiveMap();
+      }
+    }
+    // --- RENDERIZAÇÃO GERAL ---
+    function renderAllViews() {
+      renderDashboard();
+      renderOrdersTable();
+      renderUsersTable();
+      renderLogs();
+    }
+
+    function getBadgeHTML(status) {
+      switch (status) {
+        case 'entregue':
+          return `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Entregue</span>`;
+        case 'em_transito':
+          return `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-blue-100 text-blue-800 border border-blue-200 inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span> Em Trânsito</span>`;
+        case 'pendente':
+          return `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200 inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Pendente</span>`;
+        case 'atrasado':
+          return `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-200 inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-600"></span> Atrasado</span>`;
+        default:
+          return `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-700">${status}</span>`;
+      }
+    }
+
+    // Dashboard Render
+    function renderDashboard() {
+      const orders = getDBOrders();
+      const total = orders.length;
+      const delivered = orders.filter(o => o.status === 'entregue').length;
+      const inTransit = orders.filter(o => o.status === 'em_transito').length;
+      const pending = orders.filter(o => o.status === 'pendente').length;
+      const delayed = orders.filter(o => o.status === 'atrasado').length;
+
+      document.getElementById('statTotalOrders').innerText = total;
+      document.getElementById('statDelivered').innerText = delivered;
+      document.getElementById('statInTransit').innerText = inTransit;
+      document.getElementById('statPending').innerText = pending + delayed;
+      document.getElementById('navOrderBadge').innerText = total;
+
+      const pctDelivered = total ? ((delivered / total) * 100).toFixed(1) : 0;
+      const pctTransit = total ? ((inTransit / total) * 100).toFixed(1) : 0;
+      const pctPending = total ? ((pending / total) * 100).toFixed(1) : 0;
+      const pctDelayed = total ? ((delayed / total) * 100).toFixed(1) : 0;
+
+      document.getElementById('barDelivered').style.width = pctDelivered + '%';
+      document.getElementById('labelPercentDelivered').innerText = `${pctDelivered}% (${delivered})`;
+
+      document.getElementById('barInTransit').style.width = pctTransit + '%';
+      document.getElementById('labelPercentInTransit').innerText = `${pctTransit}% (${inTransit})`;
+
+      document.getElementById('barPending').style.width = pctPending + '%';
+      document.getElementById('labelPercentPending').innerText = `${pctPending}% (${pending})`;
+
+      document.getElementById('barDelayed').style.width = pctDelayed + '%';
+      document.getElementById('labelPercentDelayed').innerText = `${pctDelayed}% (${delayed})`;
+
+      // Tabela Recente
+      const dashTbody = document.getElementById('dashOrdersTbody');
+      dashTbody.innerHTML = orders.slice(0, 4).map(o => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="p-3 font-mono font-bold text-blue-600">${o.id}</td>
+          <td class="p-3 font-medium text-slate-900">${o.client}</td>
+          <td class="p-3 text-slate-600">${o.driver}</td>
+          <td class="p-3 font-mono">${o.eta}</td>
+          <td class="p-3">${getBadgeHTML(o.status)}</td>
+        </tr>
+      `).join('');
+
+      // Frota no Dashboard
+      const driversList = document.getElementById('dashDriversList');
+      driversList.innerHTML = [
+        { name: 'Carlos Eduardo', truck: 'Volvo FH 540 (GRS-2026)', status: 'Em Rota (74km/h)' },
+        { name: 'Mariana Silva', truck: 'Mercedes Sprinter', status: 'Disponível' },
+        { name: 'Roberto Santos', truck: 'Scania R450', status: 'Aguardando Carga' }
+      ].map(d => `
+        <div class="flex justify-between items-center text-xs p-2.5 rounded-lg bg-slate-50 border border-slate-100">
+          <div>
+            <p class="font-bold text-slate-900">${d.name}</p>
+            <p class="text-[10px] text-slate-500">${d.truck}</p>
+          </div>
+          <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">${d.status}</span>
+        </div>
+      `).join('');
+    }
+
+    // Tabela da Central de Pedidos
+    function setFilterStatus(status) {
+      filterStatus = status;
+      ['todos', 'em_transito', 'pendente', 'entregue', 'atrasado'].forEach(s => {
+        const btn = document.getElementById(`filter-${s}`);
+        if (s === status) {
+          btn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white transition';
+        } else {
+          btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition';
+        }
+      });
+      renderOrdersTable();
+    }
+
+    function renderOrdersTable() {
+      const search = (document.getElementById('orderSearchInput').value || '').toLowerCase();
+      const orders = getDBOrders();
+      
+      const filtered = orders.filter(o => {
+        const matchesStatus = filterStatus === 'todos' || o.status === filterStatus;
+        const matchesSearch = o.id.toLowerCase().includes(search) || 
+                              o.client.toLowerCase().includes(search) || 
+                              o.driver.toLowerCase().includes(search);
+        return matchesStatus && matchesSearch;
+      });
+
+      const tbody = document.getElementById('ordersFullTbody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colSpan="7" class="p-8 text-center text-slate-400">Nenhum pedido encontrado.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(o => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="p-4">
+            <span class="font-mono font-bold text-blue-600 block">${o.id}</span>
+            <span class="text-[10px] font-mono text-slate-400">${o.trackingCode}</span>
+          </td>
+          <td class="p-4 max-w-xs">
+            <p class="font-bold text-slate-900 truncate">${o.client}</p>
+            <p class="text-[11px] text-slate-500 truncate">${o.destination}</p>
+          </td>
+          <td class="p-4">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${
+              o.priority === 'Urgente' ? 'bg-rose-100 text-rose-700' :
+              o.priority === 'Alta' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-600'
+            }">${o.priority}</span>
+          </td>
+          <td class="p-4 font-medium text-slate-800">${o.driver}</td>
+          <td class="p-4 font-mono font-semibold">${o.eta}</td>
+          <td class="p-4">${getBadgeHTML(o.status)}</td>
+          <td class="p-4 text-right">
+            <button onclick="openOrderDetails('${o.id}')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-xs transition">
+              Detalhes
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+    // Criar Novo Pedido
+    function openNewOrderModal() { document.getElementById('newOrderModal').classList.remove('hidden'); }
+    function closeNewOrderModal() { document.getElementById('newOrderModal').classList.add('hidden'); }
+
+    function handleCreateOrder(e) {
+      e.preventDefault();
+      const client = document.getElementById('modalClient').value;
+      const destination = document.getElementById('modalDestination').value;
+      const driver = document.getElementById('modalDriver').value;
+      const priority = document.getElementById('modalPriority').value;
+      const items = document.getElementById('modalItems').value || 'Carga Padrão';
+
+      const orders = getDBOrders();
+      const newId = `LOG-${Math.floor(8000 + Math.random() * 1000)}`;
+      const newOrder = {
+        id: newId,
+        client,
+        destination,
+        driver,
+        status: 'pendente',
+        eta: '17:30',
+        priority,
+        items,
+        trackingCode: `TRK-${Math.floor(1000 + Math.random() * 9000)}-BR`
+      };
+
+      orders.unshift(newOrder);
+      saveDBOrders(orders);
+      addAuditLog('PEDIDO', `Novo pedido ${newId} cadastrado para ${client}.`);
+      closeNewOrderModal();
+      renderAllViews();
+    }
+
+    // Detalhes do Pedido
+    function openOrderDetails(orderId) {
+      const orders = getDBOrders();
+      const o = orders.find(x => x.id === orderId);
+      if (!o) return;
+
+      document.getElementById('detailOrderId').innerText = o.id;
+      document.getElementById('detailStatusBadge').innerHTML = getBadgeHTML(o.status);
+      document.getElementById('detailClient').innerText = o.client;
+      document.getElementById('detailTracking').innerText = o.trackingCode;
+      document.getElementById('detailDestination').innerText = o.destination;
+      document.getElementById('detailDriver').innerText = o.driver;
+      document.getElementById('detailEta').innerText = o.eta;
+      document.getElementById('detailItems').innerText = o.items;
+
+      const advBtn = document.getElementById('detailAdvanceBtn');
+      advBtn.onclick = () => advanceOrderStatus(o.id);
+
+      document.getElementById('orderDetailsModal').classList.remove('hidden');
+    }
+
+    function closeOrderDetailsModal() {
+      document.getElementById('orderDetailsModal').classList.add('hidden');
+    }
+
+    function advanceOrderStatus(orderId) {
+      const orders = getDBOrders();
+      const o = orders.find(x => x.id === orderId);
+      if (!o) return;
+
+      const flow = { 'pendente': 'em_transito', 'em_transito': 'entregue', 'atrasado': 'em_transito', 'entregue': 'pendente' };
+      o.status = flow[o.status] || 'entregue';
+      
+      saveDBOrders(orders);
+      addAuditLog('OPERACAO', `Status do pedido ${o.id} alterado para "${o.status}".`);
+      closeOrderDetailsModal();
+      renderAllViews();
+    }
+
+    // Motorista Simulator
+    function driverStartNavigation() {
+      alert('Navegação GPS iniciada! O veículo agora transmite telemetria.');
+      addAuditLog('MOTORISTA', 'Carlos Eduardo iniciou rota de entrega no GPS.');
+    }
+
+    function driverConfirmDelivery(orderId) {
+      const orders = getDBOrders();
+      const o = orders.find(x => x.id === orderId);
+      if (o) {
+        o.status = 'entregue';
+        saveDBOrders(orders);
+        addAuditLog('MOTORISTA', `Entrega do pedido ${orderId} confirmada em campo pelo motorista.`);
+        alert(`Sucesso! Pedido ${orderId} marcado como ENTREGUE no banco local.`);
+        renderAllViews();
+      }
+    }
+    // Tabela de Usuários
+    function renderUsersTable() {
+      const users = getDBUsers();
+      const tbody = document.getElementById('usersTableTbody');
+      tbody.innerHTML = users.map(u => `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="p-3 font-bold text-slate-900">${u.name}</td>
+          <td class="p-3 text-slate-500 font-mono">${u.email}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded bg-slate-100 font-mono text-[11px] font-bold text-slate-700">${u.role}</span></td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">${u.status}</span></td>
+          <td class="p-3 text-slate-400 font-mono">${u.lastAccess}</td>
+        </tr>
+      `).join('');
+    }
+
+    // Auditoria e Logs
+    function addAuditLog(cat, msg) {
+      const logs = getDBLogs();
+      const time = new Date().toLocaleTimeString();
+      logs.unshift({ time, category: cat, text: msg });
+      saveDBLogs(logs);
+      renderLogs();
+    }
+
+    function renderLogs() {
+      const logs = getDBLogs();
+      const container = document.getElementById('logsContainer');
+      container.innerHTML = logs.map(l => `
+        <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-3">
+          <span class="text-slate-400 font-bold">${l.time}</span>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-100 text-blue-800">${l.category}</span>
+          <span class="text-slate-700">${l.text}</span>
+        </div>
+      `).join('');
+    }
+
+    function clearLogs() {
+      saveDBLogs([]);
+      renderLogs();
+    }
+
+    // --- CANVAS MAP ANIMATION ---
+    let mapAnimRunning = true;
+    let animProgress = 0;
+
+    function toggleMapAnimation() {
+      mapAnimRunning = !mapAnimRunning;
+      document.getElementById('toggleMapAnimBtn').innerText = mapAnimRunning ? 'Pausar Simulação' : 'Retomar Simulação';
+    }
+
+    function initLiveMap() {
+      const canvas = document.getElementById('liveMapCanvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+
+      function drawMap() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Grid
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 1;
+        const gridSize = 40;
+        for (let x = 0; x < canvas.width; x += gridSize) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+        }
+        for (let y = 0; y < canvas.height; y += gridSize) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+        }
+
+        // Waypoints
+        const p1 = { x: canvas.width * 0.15, y: canvas.height * 0.75 };
+        const p2 = { x: canvas.width * 0.50, y: canvas.height * 0.35 };
+        const p3 = { x: canvas.width * 0.85, y: canvas.height * 0.55 };
+
+        // Pista
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 12;
+        ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.quadraticCurveTo(p2.x, p2.y, p3.x, p3.y); ctx.stroke();
+
+        // Rota Ativa
+        ctx.strokeStyle = '#2563eb';
+        ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.quadraticCurveTo(p2.x, p2.y, p3.x, p3.y); ctx.stroke();
+
+        // Desenhar Marcadores
+        drawPin(ctx, p1.x, p1.y, '#3b82f6', 'CD São Paulo');
+        drawPin(ctx, p2.x, p2.y, '#f59e0b', 'Ponto Jundiaí');
+        drawPin(ctx, p3.x, p3.y, '#10b981', 'Hub Campinas');
+
+        // Movimento do Veículo
+        if (mapAnimRunning) {
+          animProgress += 0.003;
+          if (animProgress > 1) animProgress = 0;
+        }
+
+        const t = animProgress;
+        const vx = (1 - t) * (1 - t) * p1.x + 2 * (1 - t) * t * p2.x + t * t * p3.x;
+        const vy = (1 - t) * (1 - t) * p1.y + 2 * (1 - t) * t * p2.y + t * t * p3.y;
+
+        // Ícone do Caminhão no Canvas
+        ctx.shadowColor = '#2563eb';
+        ctx.shadowBlur = 15;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath(); ctx.arc(vx, vy, 10, 0, Math.PI * 2); ctx.fill();
+
+        ctx.fillStyle = '#2563eb';
+        ctx.beginPath(); ctx.arc(vx, vy, 6, 0, Math.PI * 2); ctx.fill();
+        ctx.shadowBlur = 0;
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 11px Inter';
+        ctx.fillText('🚚 Carlos E. (Volvo FH)', vx + 14, vy + 4);
+
+        requestAnimationFrame(drawMap);
+      }
+
+      drawMap();
+      function drawPin(ctx, x, y, color, label) {
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10px Inter';
+      ctx.fillText(label, x - 20, y + 20);
+    }
+
+    // Relógio Topo
+    setInterval(() => {
+      const clock = document.getElementById('clockDisplay');
+      if (clock) clock.innerText = new Date().toLocaleTimeString();
+    }, 1000);
+
+    // Inicialização ao carregar a página
+    window.addEventListener('DOMContentLoaded', () => {
+      initDatabase();
+    });
+  </script>
+</body>
+</html>
+                                                                      }
